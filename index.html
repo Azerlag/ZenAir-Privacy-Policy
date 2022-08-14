@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <script src="socket.io/socket.io.js"></script>
-
+	
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     
   <script src="js/ToSlave_LED.js"></script>
@@ -76,6 +75,8 @@
     <script src="js/ConsoleBar.js"></script>
 
     <script type="text/javascript">
+      const Console = document.getElementById('Console');
+	    
       var OldWid = 0; 
       var OldHei = 0;
       function XY() {
@@ -115,31 +116,21 @@
     
     
     <script type="text/javascript">
-
-
-
-
-
-
-
-      var socket = io.connect();
       var mass = [];
       var MassScore = 0;
       var Revers = 0;
       const Console = document.getElementById('Console');
       
-
-
       const ConsolHistory = 300;
       
-
-
       /*
+      var socket = io.connect();
       socket.on('FromArduino', (arg) => {
         mass[MassScore] = arg;
         ConsoleSupp();
       });
       */
+	    
       function ResetConsoleDataNum() {
         mass = [];
         MassScore = 0;
@@ -160,8 +151,6 @@
           document.getElementById('ConsoleLastData').innerHTML = (MassScore-Revers);
           document.getElementById('ConsoleDataNum').innerHTML = MassScore;
       }
-
-
       var old = 0; 
       var c = 0;
       var Now = [];
@@ -204,55 +193,9 @@
         if (Period.toFixed(0) != 2000) {
           document.getElementById('ConsoleRate').innerHTML = ConsoleRate.toFixed(2);
           document.getElementById('FPS').innerHTML = Period.toFixed(0)+'ms';
-
-          ToSettingsFile('ConsoleData FPS: '+Period.toFixed(0));
         }
       }, );
     </script>
-
-      <!--
-      <script type="text/javascript">
-        const styled = require("styled-components");
-        
-        const Container = styled.div`
-          background-color: #2b2b2b;
-          border-radius: 5px;
-        `
-
-        const Title = styled.h1`
-          font-weight: 300;
-        `
-        const Text = styled.p`
-          font-size: 12px
-        `
-        export const SimpleComponent = () => (
-        <Container>
-          <Title>Styled Component</Title>
-          <Text>Some text</Text>
-        </Container>
-      )
-
-      </script>
-      -->
-
-      <!--
-      <script type="text/javascript">
-        
-        
-        var socketTWO = io.connect();
-
-        socketTWO.on('Info', function (str) {
-          document.getElementById("outputstr").innerHTML = str;
-        });
-        function showInfo(str) {
-          document.getElementById("outputstr").innerHTML = str;
-          socket.emit("Info", { str: str });
-        }
-      </script>
-
-      -->
-      
-    
 
     <br></br>
     <input type="range" class="slider" id= "inputSlider" value="0" min="0" max="255" step="3" oninput="analyze(this.value)"> </input>
@@ -263,7 +206,7 @@
 
 
     <script type="text/javascript">
-      var socket = io.connect();
+
       var Scroll = 0;
       var DetlaSum = 0;
       const inputSlider = document.getElementById('inputSlider');
@@ -277,7 +220,6 @@
         outputText.innerHTML = Scroll;
         inputSlider.value = Scroll;
         ToSlave_LED(Scroll);
-        ToArduino(Scroll);
       }
       var isDigit = function(a) {
         return /\d/.test(a);
