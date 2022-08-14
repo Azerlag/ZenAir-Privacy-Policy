@@ -111,8 +111,6 @@
         console.log(done);
       });
 
-      // попробовать соединить ардуину и сайт (нод) (по вай-фаю)
-
     </script>
     
     
@@ -136,41 +134,9 @@
       
 
 
-
-      //document.getElementById('Console').addEventListener('keydown', (key) => {
-      //    //console.log(key.keyCode);
-      //    if (key.keyCode == 13) {
-      //     
-     //     } else {
-//
-     //     }
-     // });
-
-
       /*
       socket.on('FromArduino', (arg) => {
         mass[MassScore] = arg;
-
-        //var ParserValue = []; 
-        //var ValueScore = 0; var KeyScore = 0;
-
-        for (var a=1;a<32;a++) {
-          if (mass[MassScore][a] == undefined) break;
-
-          if (isDigit(mass[MassScore][a]) && mass[MassScore][(a+1)] == ' ') {
-            ParserValue[ValueScore] = mass[MassScore][a];
-            ValueScore++;
-          } else if (mass[MassScore][a] != ' ') {
-            ParserValue[KeyScore] = mass[MassScore][a];
-            KeyScore++;
-          } else {
-            //console.log(ParserValue);
-            ParserValue = []; ValueScore = 0; KeyScore = 0;
-          }
-
-        };
-
-        
         ConsoleSupp();
       });
       */
@@ -194,18 +160,6 @@
           document.getElementById('ConsoleLastData').innerHTML = (MassScore-Revers);
           document.getElementById('ConsoleDataNum').innerHTML = MassScore;
       }
-
-      
-
-
-
-
-        //if (Settings != OldSettings) {
-        //  MassSett += Settings+','+'\r';
-        //}
-
-
-
 
 
       var old = 0; 
@@ -238,8 +192,6 @@
         Divider = (Period/MinRate)/(500/MinRate);
         var ConsoleRate = Sum / ((Divider+OldDivider)/2);
 
-        
-        
         old = MassScore;
         Period = parseFloat(Period);
         if (ConsoleRate > 0 && Period >= MinRate) {
@@ -248,9 +200,6 @@
           Period = Period*(1+(((Period/MaxRate)-1)/((Period/MaxRate)-(Period/MinRate))));
         }
         setTimeout(Speed, Period);
-
-
-
 
         if (Period.toFixed(0) != 2000) {
           document.getElementById('ConsoleRate').innerHTML = ConsoleRate.toFixed(2);
@@ -334,10 +283,8 @@
         return /\d/.test(a);
       }
       
-      var StepScroll; //if (StepScroll == 1) ToSettingsFile('StepScroll: '+StepScroll);  // опасное место
-      //socket.emit('SettingsReq', 'StepScroll: ');
-      
-      
+      var StepScroll = 10;
+	    
       inputSlider.addEventListener('wheel', (e)=>{
         var Detla = e.deltaY;
         Detla = StepScroll*(Detla/100);
@@ -348,12 +295,6 @@
         DetlaSum = parseInt(DetlaSum);
         analyze();
       }, {passive: true});
-    </script>
-		
-        <!-- 
-		<script src = "lib/socket.io.js"></script>
-        <script src = "lib/three.js"></script>
-		-->
-		
+    </script>	
   </body>
 </html>
