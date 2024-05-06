@@ -1,8 +1,10 @@
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Changelogs
+▷ 1.632 → 1.633
+- Terminal reordering and order saving works now
 <details>
-<summary>1.43 → 1.632</summary>
+<summary>1.43 → 1.632</summary>https://github.com/Azerlag/ZenAir-Privacy-Policy/blob/main/README.md
 
 Performance:
 - Reduced a bit RAM usage by two classes merging
