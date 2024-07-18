@@ -45,7 +45,7 @@ Ensure that the format specified in the app is strictly followed, including main
 - The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
   - Text and drawings below and to the right of the barcode’s white border can be anything. The main point is not to extend the white area further and to keep the code in the upper left corner
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
-- Creating two or more connections simultaneously is not possible (architectural flaw, will be fixed in the next version)
+- Creating two or more WiFi/Bluetooth connections simultaneously is not possible (architectural flaw, will be fixed in the next version)
 
 ## Changelogs
 
