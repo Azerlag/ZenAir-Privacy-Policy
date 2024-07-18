@@ -32,10 +32,25 @@ In sketch it can be:
 ```
 Ensure that the format specified in the app is strictly followed, including maintaining a space between the command and the button future text: "command text"
 
+## Notes
+
+- Terminal initialization and variable setup occur every time the user returns to the main screen (e.g., from the settings screen)
+- Terminals do not occupy RAM while they are not open
+  - Consequently, upon each opening, variables are initialized. This can cause noticeable lag when loading a large terminal, depending on the device’s performance. An exception is console data, which loads with the application if the console is enabled in the settings
+- The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
+- All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
+- History does not occupy RAM, except for temporary buffer data waiting to be written to memory
+- Memory writes occur when transitioning from the main screen and when minimizing the application (stop event)
+- The Ignore List does not bypass specified tags (messages) to the console and history data arrays, but these messages are passed to the command handler
+- The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
+  - Text and drawings below and to the right of the barcode’s white border can be anything. The main point is not to extend the white area further and to keep the code in the upper left corner
+- The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
+- Creating two or more connections simultaneously is not possible (architectural flaw, will be fixed in the next version)
+
 ## Changelogs
 
 <details>
-<summary>1.633 → 1.769</summary>
+<summary>1.633 → 1.769 (2024.07.XX)</summary>
 I would like to thank everyone who continues to use my App and those who manually send crash reports via email. Thank you!
   
 For more information, including other version changelogs and usage examples, you can find the GitHub link on the interface size setting screen (Settings by Default). Also if you want to receive new versions earlier, join the beta testers on the ZenAir App page on the Google Play
@@ -83,10 +98,10 @@ Known Issues:
 - Resource limit settings for the receiver do not currently have any effect
 </details>
 
-▷ 1.632 → 1.633
+▷ 1.632 → 1.633 (2024.05.06)
 - Terminal reordering and order saving works now
 <details>
-<summary>1.43 → 1.632</summary>
+<summary>1.43 → 1.632 (2024.05.04)</summary>
 
 Performance:
 - Reduced a bit RAM usage by two classes merging
@@ -119,3 +134,4 @@ Future:
 - MQTT panel addition
 
 </details>
+▷ X → 1.43 (2023.08.10)
