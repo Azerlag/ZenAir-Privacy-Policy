@@ -134,4 +134,5 @@ Future:
 - MQTT panel addition
 
 </details>
+
 ▷ X → 1.43 (2023.08.10)
