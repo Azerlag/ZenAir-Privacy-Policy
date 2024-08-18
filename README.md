@@ -14,12 +14,36 @@ In sketch it can be:
 ```
 Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 
+#### The MCU can set the button color directement in ARGB format
+1) Activate in: Settings → Buttons! → Button → Allow to set ARGB color by command as <command button_index uint32_t(color)>
+2) Set your preferred command with plain text
+3) Receive command from MCU
+In sketch it can be:
+```c
+  #define RGB_TO_UINT32(a, r, g, b) (((uint32_t)(a) << 24) | ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint32_t)(b))
+  const uint8_t buttonCount = 4;
+  static uint32_t time = 0;
+  static uint8_t buttonIndex = 0;
+  static uint8_t a = 255, r = 64, g = 128, b = 255;
+
+  if (millis() - time > 50) {
+    time = millis();
+    if (++buttonIndex > buttonCount-1) buttonIndex = 0;
+    uint32_t color = RGB_TO_UINT32(a, r++, g++, b++);
+    client.print("setColor ");
+    client.print(buttonIndex);
+    client.print(" ");
+    client.println(color);
+    // First output will be: "setColor 1 4282417407"
+  }
+```
+
 #### The MCU can reset all current button colors to the default white with a command
 1) Activate in: Settings → Buttons! → Use all button colors clear command
 2) Set your preferred command with plain text
-3) Receive command from MCU (see instruction above)
+3) Receive command from MCU (see instructions above)
 
-#### The MCU can set the button text defined in the button Settings
+#### The MCU can set the button text
 1) Activate in: Settings → Buttons! → Button → Enable a text replacement command
 2) Set your preferred command with plain text
 3) Receive command from MCU
@@ -48,9 +72,33 @@ Ensure that the format specified in the app is strictly followed, including main
 - Creating two or more WiFi/Bluetooth connections simultaneously is not possible (architectural flaw, will be fixed in the next version)
 
 ## Changelogs
-
 <details>
-<summary>1.633 → 1.769 (2024.07.XX)</summary>
+<summary>1.769 → 1.817 (2024.08.XX)</summary>
+
+I should have released this update a long time ago, but unfortunately I noticed a significant bug with the MQTT buttons too late.
+
+I have plans for the next version to add a real grid panel on which it will be possible to place and move elements. Add a chart at the end...
+
+Performance:
+- External data storage library has been removed, streamlining app size
+- That migration has reduced required occupied by user data by ~58%
+
+Features:
+- Added a new feature to send messages directly to the developer, making it easier to report bugs or suggest features
+- Introduced the ability to assign colors to buttons using the ARGB format by MCU (check out an example on GitHub)
+- Added visible dashes steps on the slider body at low values
+
+Fixes:
+- MQTT buttons and sliders are now fully operational
+- Button states are now saved when you exit the app
+- Improved slider behavior with small values
+- Fixed an issue where the slider did not send value of a single click or at release when the delay setting was enabled
+- Removed the "Receiver Delay" setting as it no longer had any functional impact
+- The time-based auto-clicker functionality for buttons has been removed
+
+</details>
+<details>
+<summary>1.633 → 1.769 (2024.07.22)</summary>
 I would like to thank everyone who continues to use my App and those who manually send crash reports via email. Thank you!
   
 For more information, including other version changelogs and usage examples, you can find the GitHub link on the interface size setting screen (Settings by Default). Also if you want to receive new versions earlier, join the beta testers on the ZenAir App page on the Google Play
