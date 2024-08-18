@@ -37,6 +37,7 @@ In sketch it can be:
     // First output will be: "setColor 1 4282417407"
   }
 ```
+<img src="res/setColor.gif" width="400" height="300" alt="Color set demo">
 
 #### The MCU can reset all current button colors to the default white with a command
 1) Activate in: Settings → Buttons! → Use all button colors clear command
