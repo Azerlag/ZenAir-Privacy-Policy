@@ -1,7 +1,7 @@
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 1.769
+All instructions below pertain to the current version at the time of writing: 1.817
 
 #### The MCU can set the button color defined in the button Settings
 1) Activate in: Settings → Buttons! → Button → Enable color changing with commands
@@ -74,7 +74,7 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Changelogs
 <details>
-<summary>1.769 → 1.817 (2024.08.XX)</summary>
+<summary>1.769 → 1.817 (2024.08.19)</summary>
 
 I should have released this update a long time ago, but unfortunately I noticed a significant bug with the MQTT buttons too late.
 
