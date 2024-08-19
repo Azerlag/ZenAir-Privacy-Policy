@@ -20,7 +20,7 @@ Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 3) Receive command from MCU
 In sketch it can be:
 ```c
-  #define RGB_TO_UINT32(a, r, g, b) (((uint32_t)(a) << 24) | ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint32_t)(b))
+  #define ARGB_TO_UINT32(a, r, g, b) (((uint32_t)(a) << 24) | ((uint32_t)(r) << 16) | ((uint32_t)(g) << 8) | (uint32_t)(b))
   const uint8_t buttonCount = 4;
   static uint32_t time = 0;
   static uint8_t buttonIndex = 0;
@@ -29,7 +29,7 @@ In sketch it can be:
   if (millis() - time > 50) {
     time = millis();
     if (++buttonIndex > buttonCount-1) buttonIndex = 0;
-    uint32_t color = RGB_TO_UINT32(a, r++, g++, b++);
+    uint32_t color = ARGB_TO_UINT32(a, r++, g++, b++);
     client.print("setColor ");
     client.print(buttonIndex);
     client.print(" ");
@@ -59,18 +59,15 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Notes
 
-- Terminal initialization and variable setup occur every time the user returns to the main screen (e.g., from the settings screen)
-- Terminals do not occupy RAM while they are not open
-  - Consequently, upon each opening, variables are initialized. This can cause noticeable lag when loading a large terminal, depending on the device’s performance. An exception is console data, which loads with the application if the console is enabled in the settings
+- Terminal order initialization setup occur every time the user returns to the main screen (e.g., from the settings screen)
 - The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
 - All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
 - History does not occupy RAM, except for temporary buffer data waiting to be written to memory
 - Memory writes occur when transitioning from the main screen and when minimizing the application (stop event)
-- The Ignore List does not bypass specified tags (messages) to the console and history data arrays, but these messages are passed to the command handler
+- The Ignore List does not through specified tags (messages) to the console and history data arrays, but these messages still passed to the command handler
 - The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
   - Text and drawings below and to the right of the barcode’s white border can be anything. The main point is not to extend the white area further and to keep the code in the upper left corner
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
-- Creating two or more WiFi/Bluetooth connections simultaneously is not possible (architectural flaw, will be fixed in the next version)
 
 ## Changelogs
 <details>
