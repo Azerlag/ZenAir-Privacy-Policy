@@ -1,7 +1,7 @@
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 1.817
+All instructions below pertain to the current version at the time of writing: 1.817a
 
 #### The MCU can set the button color defined in the button Settings
 1) Activate in: Settings → Buttons! → Button → Enable color changing with commands
@@ -66,10 +66,13 @@ Ensure that the format specified in the app is strictly followed, including main
 - Memory writes occur when transitioning from the main screen and when minimizing the application (stop event)
 - The Ignore List does not through specified tags (messages) to the console and history data arrays, but these messages still passed to the command handler
 - The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
-  - Text and drawings below and to the right of the barcode’s white border can be anything. The main point is not to extend the white area further and to keep the code in the upper left corner
+  - Text and drawings below and to the right of the barcode’s black border can be anything. The main point is not to remove the border and to keep the code in the upper left corner
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
 
 ## Changelogs
+▷ 1.817 → 1.817a (2024.10.02)
+- Minor improvement of the primary image processing algorithm before of main scanning for Data Matrix code is run. Now, instead of pure white, the first column of pixels (of the y coordinate) can be any color except black (reserved as the end of the barcode: blackeness of 15%). Despite this, it is still recommended not to deviate from the black-and-white paradigm, this improvement makes it possible to read jpeg modified images, where white and black can be impure (imperfect).
+- Buttons colorization by ARGB command works now
 <details>
 <summary>1.769 → 1.817 (2024.08.19)</summary>
 
