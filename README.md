@@ -1,7 +1,79 @@
+This is official project page created by developer (me) dedicated to ZenAir Android application - tool for make connect to MCU's via local Wi-Fi, Bluetooth and MQTT. It's completely free and has no ads.
+
+The application provides a user interface editor with in-app «Terminals» to make it more comfy and flexible for using MCU in real practice.
+There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
+
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 1.817a
+All instructions below pertain to the current version at the time of writing: 1.936
+
+<details>
+<summary>GRID</summary>
+  
+The main way to control the environment from MCU is `zenItem` default commands, here is help table below.
+You can also use the commands without an MCU by hand. To do this, enable the «Send messages directly to the internal commands handler» option on the sender item's settings.
+```
+Non-mqtt commands handling:
+
+		Works with all items
+
+	zenItem index 	setColor 	uint32_t(color)		Set background color for item
+	zenItem index 	setColor				Clear background color for item by default color
+	zenItem 	setColor 	uint32_t(color)		Set background color for all items
+	zenItem 	setColor 				Clear background color for all items by default color
+		
+		Works with all items
+
+	zenItem index 	setTitle 	your text		Set title text
+	zenItem index 	setTitle 				Clear title text
+	zenItem 	setTitle 	your text		Set title text for all
+	zenItem 	setTitle 				Clear title text for all
+	
+		Works with: StateItem
+
+	zenItem index	setText 	your text		Set text to extra field for StateItem
+	zenItem index	setText 				Clear text in extra field for StateItem
+	zenItem 	setText 	your text		Set text to extra field for all StateItems
+	zenItem 	setText 				Clear text in extra field for all StateItems
+		
+		Works with: StateItem and ButtonItem
+		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
+
+	zenItem index 	setIcon 	uint32_t(icon_code)			Set icon to item
+	zenItem index 	setIcon 	uint32_t(icon_code) uint32_t(color) 	Set colorized icon to item
+	zenItem index 	setIcon 	-* 		    uint32_t(color) 	Set color to icon
+	zenItem index 	setIcon 	-* 					Clear icon color
+	zenItem index 	setIcon 						Clear icon & color for item
+	zenItem       	setIcon 	uint32_t(icon_code)			Set icon for all items
+	zenItem       	setIcon 	uint32_t(icon_code) uint32_t(color)	Set colorized icon for all items
+	zenItem       	setIcon 	-* 		    uint32_t(color)	Set color to icon for all items
+	zenItem       	setIcon 	-* 					Clear icon color for all items
+	zenItem       	setIcon 						Clear icon & color for all items
+	
+	Example:
+		zenItem 0 setTitle hello title
+		element of zero index will gives new title: "hello title"
+	
+MQTT commands handling:
+	StateItem:
+		Message-to-color (state commands in settings)
+		Works with only one element per command (individually - against processing logic of non-mqtt connection)
+		Any messages that cannot be processed as color-command will be identified as extra text to insert to the item
+	TextLogItem:
+		Any message will added to log (except success handled main zenItem commands with «Don't display accepted commands» setting)
+	ButtonItem:
+		isn't subscriber
+	TextFieldItem: 
+		isn't subscriber
+```
+<img src="res/index_0.png" width="400" height="300">
+
+</details>
+
+
+<details>
+<summary>CLASSIC</summary>
 
 #### The MCU can set the button color defined in the button Settings
 1) Activate in: Settings → Buttons! → Button → Enable color changing with commands
@@ -56,6 +128,7 @@ In sketch it can be:
   // It makes next string: "setTextCommand 0"
 ```
 Ensure that the format specified in the app is strictly followed, including maintaining a space between the command and the button future text: "command text"
+</details>
 
 ## Notes
 
@@ -70,6 +143,61 @@ Ensure that the format specified in the app is strictly followed, including main
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
 
 ## Changelogs
+
+<details>
+<summary>1.817a → 1.936 (2024.xx.xx)</summary>
+
+Thank you to everyone who continues to use my app! In turn, I'm introducing a new version
+
+It's become pretty clear to me that the classic terminal view can't fully satisfy all the needs of IoT devices - it's too inflexible, so I started development. After several months of continuous work, I'm releasing an update
+
+I want to express my gratitude again: as of 24.12.04, we have 479 active users, I really appreciate your dedication and trust in my project and I hope that my subsequent absence won't upset you. The next version will definitely be
+
+"Removed the 'mail to developer' feature" - unfortunately, I can't afford to maintain a normal server for collecting statistics and your messages. Before this update, I used a crutch with mqtt hosting: it worked very poorly. I can't be sure that your messages are getting through. All I got was the messages "123" and "gcv". Please leave feedback on GitHub
+
+Support for the French language has been discontinued, sorry, but 15 people is too few, especially since the quality of the translation left much to be desired
+
+Features:
+- Introduced an alpha version of the Grid terminal:
+* A new type of user interface with the ability to place elements on a grid, customize their appearance (background, icons, names, content size inside)
+* Advanced ability to change all element parameters via commands from microcontrollers
+* Available elements: StateItem, TextLogItem, ButtonItem, TextFieldItem
+* Planned: Slider, Switch, Linear Chart, Joystick and others
+
+- Added a function to scan the local network for your devices and get the terminal embedded in the device - now you can put the terminal in the controller's memory and retrieve it during the search process. You can find an example on Githab.
+- Added autosave
+- Added the ability to automatically connect when the application starts
+
+Improvements:
+- Saving the scroll position in the list when it is expanded
+- Blocking scrolling beyond the nested list
+- Added console lines highlighting for more contrast and a numeric score of line on the side
+- Added ARGB values (0-255) and white shadow on background for greater contrast to the HSV circle
+- Added global button size modifier for classic terminal
+- Description text in settings is now highlighted, all pictures have been removed
+- Changed last button pressed to softer blue
+
+Fixes:
+- Fixed: the settings for the unclickability of the button in the classic terminal were not copied or exported
+- On the main settings screen, changes made in the terminals were not saved before restarting
+- Fixed export issues: changes made before export are now also saved
+- Fixed a bug with the remaining red text when an import attempt failed, even when a simple warning was displayed that should have been yellow
+- The timecode was not displayed in the console when the "Don't show repeatable messages" setting was active
+- Fixed the display of the time zone for new exported terminals
+- Fixed the indent after the button array
+
+Performance:
+- Improved codebase
+- Reduced text volume of exporting terminal by ~17% by eliminating default values
+
+Other Changes:
+- Added a link to GitHub in the main menu
+- Removed the "mail to developer" function
+- Increased the maximum size of an imported terminal, considered potentially dangerous, to 5120 bytes
+- Increased limits of buttons (30 -> 60) and sliders (9 -> 16) for the classic terminal
+
+</details>
+
 ▷ 1.817 → 1.817a (2024.10.02)
 - Minor improvement of the primary image processing algorithm before of main scanning for Data Matrix code is run. Now, instead of pure white, the first column of pixels (of the y coordinate) can be any color except black (reserved as the end of the barcode: blackeness of 15%). Despite this, it is still recommended not to deviate from the black-and-white paradigm, this improvement makes it possible to read jpeg modified images, where white and black can be impure (imperfect).
 - Buttons colorization by ARGB command works now
