@@ -9,6 +9,69 @@ App in Google Play: https://play.google.com/store/apps/details?id=com.gang_track
 All instructions below pertain to the current version at the time of writing: 1.936
 
 <details>
+<summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
+
+1) Make Base64 import terminal text and insert it into sketch as `const char*` like:
+```c
+const PROGMEM char* zen_terminal = "[H4sIAAAAAAAAAJ2SW3OqMBDHPwtQZ6y0DHeRF1rl4KFK66UqoyfOcBUEpWJVhOF89qqZPoYHM5tMkt1f_tlNFgWuxzG0WNcvdpngMs5QLU7En3C4cXVfY64BF6eV4uUTAmRplqcY9mJIOkHTDApy9hUQ1RT-3wYU7R7vkHQr7skKAvXbaWSiVVVCUus7rupXMGilCE1xyNcboyEBLVVRShEJOXFFAVtIzA4q8kI-9qECQuflOPf8Za8iLyS0ukNJRTM8snzfaMiy52eJho3tyGRehh7vzf8daJpznrMNgbmLU4mt14NFaqd__WTuvhFye5IS54m8oGdvfh20zfxL1NJs1p0EjZe-9DEWa_CA4S4_9CwzVDS4Trv9cS25zllRYxnLrrc_V72bzwOdI1NvOGF7Z-yNMYyJ7deXsCmZy2kYOGYNs0azW7BLWF1FOILBntACyLvwFPL1-2HKtYoTmAUkdipYySChuLe1-dZ0o_WNkjt091Agg-xyk5ES1tllBVzPt9pj5g2VJBoRpl-Myj-DNKonz4_Wg5BvAGCO-lkFmEAtKeW98FSl1Ws3He8zs4VyFXdAL-HrwclQP6zlwt_WdoTawACIZGOiDDUGSr9HX7pvuhU_McdL8AOaXe2szgUAAA==]";
+
+```
+I also use `PROGMEM` in ESP8266
+
+2) Then you should to add next special logic:
+```c
+#define ZEN_GET_GUI_COMMAND "zen_get_gui"
+#define ZEN_GET_GUI_COMMAND_RESPONCE "zen_set_gui:"
+#define ZEN_SEARCH_COMMAND "zen_search_message"
+#define ZEN_SEARCH_COMMAND_RESPONCE "zen_OK"
+
+if (strcmp(c, ZEN_SEARCH_COMMAND) == 0) {
+  client.println(ZEN_SEARCH_COMMAND_RESPONCE);
+  continue;
+} else if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
+  client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
+  client.println(zen_terminal);
+  continue;
+}
+```
+I use `continue` to skip the current pass of the loop inside the `while (client.connected())` statement. This ensures that no more data will be sent to the Locator during the search process.
+<details>
+<summary>Full code of Wi-Fi message handling</summary>
+
+```c
+// ###################### COMMON CONFIGURATION & CONSTANTS
+#define ROOT_SIZE 120
+#define READ_BYTES_TERMINATOR ';'
+// ######################
+
+void atClient() {
+  while (client.connected()) {
+    if (client.available()) {
+      char c[(ROOT_SIZE)] = "";
+      const uint8_t amount = client.readBytesUntil(READ_BYTES_TERMINATOR, c, (ROOT_SIZE));
+
+      if (strcmp(c, ZEN_SEARCH_COMMAND) == 0) {
+        client.println(ZEN_SEARCH_COMMAND_RESPONCE);
+        continue;
+      } else if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
+        client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
+        client.println(zen_terminal);
+        continue;
+      }
+
+      // ...
+    }
+  }
+}
+```
+Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
+</details>
+3) Upload your sketch and finaly you can start device searching: in main menu (left up corner) click to the Locator's «Search Device» button.
+4) Wait while Locator finds your device, look at IPs. By default it makes searching in range: from 192.168.0.0 to 192.168.3.0, you can change it in Locator settings (the gear icon in the right)
+
+</details>
+ 
+<details>
 <summary>GRID</summary>
   
 The main way to control the environment from MCU is `zenItem` default commands, here is help table below.
