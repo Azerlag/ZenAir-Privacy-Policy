@@ -67,7 +67,7 @@ MQTT commands handling:
 	TextFieldItem: 
 		isn't subscriber
 ```
-<img src="res/index_0.png" width="400" height="300">
+<img src="res/zenItem commands handle demo.gif" width="400" height="">
 
 </details>
 
