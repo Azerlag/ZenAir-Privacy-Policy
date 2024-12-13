@@ -68,7 +68,7 @@ Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 </details>
 
 3. Upload your sketch and finaly you can start device searching: in main menu (left up corner) click to the Locator's «Search Device» button
-4. Wait while Locator finds your device, look at IPs. By default it makes searching in range: from 192.168.0.0 to 192.168.3.0, you can change it in Locator settings (the gear icon in the right)
+4. Wait while Locator finds your device, you can look at IPs in Locator Log by clicking on left icon. By default Locator makes searching in range: from 192.168.0.0 to 192.168.3.0, you can change it in settings (the gear icon in the right)
 
 </details>
  
@@ -208,7 +208,7 @@ Ensure that the format specified in the app is strictly followed, including main
 ## Changelogs
 
 <details>
-<summary>1.817a → 1.936 (2024.xx.xx)</summary>
+<summary>1.817a → 1.936 (2024.12.13)</summary>
 
 Thank you to everyone who continues to use my app! In turn, I'm introducing a new version
 
