@@ -67,8 +67,14 @@ void atClient() {
 Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 </details>
 
-3. Upload your sketch and finaly you can start device searching: in main menu (left up corner) click to the Locator's «Search Device» button
-4. Wait while Locator finds your device, you can look at IPs in Locator Log by clicking on left icon. By default Locator makes searching in range: from 192.168.0.0 to 192.168.3.0, you can change it in settings (the gear icon in the right)
+3. Upload your modified sketch to your device
+4. Open the main menu (top-left corner) and click the Locator's «Search Device» button to start the search process.
+5. Wait for the Locator to find your device. You can monitor the process by checking the IPs in the Locator Log, accessible via the left icon.
+- By default, the Locator searches within the IP range `192.168.0.0` to `192.168.3.0`.
+- To modify the search range, go to the settings menu by clicking the gear icon on the right.
+6. When a terminal is received from the device, you must manually add it unless you are in Log window. In Log the terminal will be added or replaced automatically, provided the corresponding setting is enabled
+
+During the search process, the Locator sends a `zen_search_message` to your device, adds the device to the whitelist, and continues the search. At the end of the process, it checks the whitelist by sending a `zen_get_gui` message.
 
 </details>
  
@@ -131,7 +137,7 @@ MQTT commands handling:
 	TextFieldItem: 
 		isn't subscriber
 ```
-<video src="res/zenItemCommandsHandleDemo.mp4" width=250/>
+<video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
 </details>
 
 
