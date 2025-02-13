@@ -6,7 +6,7 @@ There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 1.936
+All instructions below pertain to the current version at the time of writing: 1.958
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -213,6 +213,21 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Changelogs
 
+<details>
+<summary>1.936 → 1.958 (2025.02.11)</summary>
+
+Features:
+- Added the ability to set a custom background image for the Terminal
+- MQTT elements in the Grid Terminal can now locally disable the global topic
+- Buttons now support an "on release" command
+
+Fixes:
+- Fixed a crash when entering settings after creating a Bluetooth Terminal
+- Fixed a crash caused by an receiving invalid setColor command in the CLASSIC Terminal (e.g., setColor 0)
+- Fixed an issue where the last line was duplicated in the history
+- Fixed a bug where the slider sent technical information to the console when the "Don't display Repeatable sends" setting was enabled.
+  
+</details>
 <details>
 <summary>1.817a → 1.936 (2024.12.13)</summary>
 
