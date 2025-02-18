@@ -201,7 +201,6 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Notes
 
-- Terminal order initialization setup occur every time the user returns to the main screen (e.g., from the settings screen)
 - The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
 - All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
 - History does not occupy RAM, except for temporary buffer data waiting to be written to memory
