@@ -6,7 +6,7 @@ There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 1.958
+All instructions below pertain to the current version at the time of writing: 2.000
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -107,7 +107,7 @@ Non-mqtt commands handling:
 	zenItem 	setText 	your text		Set text to extra field for all StateItems
 	zenItem 	setText 				Clear text in extra field for all StateItems
 		
-		Works with: StateItem and ButtonItem
+		Works with: StateItem & ButtonItem & TextLogItem & SliderItem
 		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
 
 	zenItem index 	setIcon 	uint32_t(icon_code)			Set icon to item
@@ -134,7 +134,9 @@ MQTT commands handling:
 		Any message will added to log (except success handled main zenItem commands with «Don't display accepted commands» setting)
 	ButtonItem:
 		isn't subscriber
-	TextFieldItem: 
+	TextFieldItem:
+		isn't subscriber
+	SliderItem:
 		isn't subscriber
 ```
 <video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
@@ -212,6 +214,31 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Changelogs
 
+<details>
+<summary>1.958 -> 2.000 (2025.07.XX)</summary>
+
+Thank you for using my app. If you like it, I will be very glad to receive your review on Google Play!
+
+This update marks a transition to a new version, featuring new functionality as well as a number of important improvements and fixes.
+
+Features:
+- Added a new connection type: USB Serial.
+- Added a new element to the Grid Terminal: Slider.
+
+Improvements:
+- Added an option to disable network status tracking in the settings.
+- Improved the behavior of the terminal auto-reconnect, with an added option to cancel.
+- Terminals that have lost connection are now marked with a dim green indicator.
+- The import window now displays the size of the terminal being copied.
+- Added a pop-up notification for internet connection loss.
+
+Fixes:
+- Fixed an issue of Classic terminal settings, due to which changes made inside tabs were reset upon closing and reopening.
+- Fixed a bug where the connection might not close after a single click on the scroll element.
+- Fixed: The joystick indicator did not return to its central position after interaction ended.
+- Fixed: When using a slider send delay, the last sent value could be incorrect.
+  
+</details>
 <details>
 <summary>1.936 → 1.958 (2025.02.11)</summary>
 
