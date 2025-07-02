@@ -203,6 +203,8 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Notes
 
+- The implementation of a serial port reader may not work very well. On my test stand with Android 5.0 (Lollipop, API 21) data reception from debugger board based on CH32V305F8P6 controller was unstable.
+  
 - The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
 - All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
 - History does not occupy RAM, except for temporary buffer data waiting to be written to memory
