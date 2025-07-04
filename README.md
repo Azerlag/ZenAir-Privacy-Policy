@@ -216,7 +216,7 @@ Ensure that the format specified in the app is strictly followed, including main
 ## Changelogs
 
 <details>
-<summary>1.958 -> 2.000 (2025.07.XX)</summary>
+<summary>1.958 → 2.000 (2025.07.XX)</summary>
 
 Thank you for using my app. If you like it, I will be very glad to receive your review on Google Play!
 
