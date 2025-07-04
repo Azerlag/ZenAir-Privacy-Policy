@@ -227,11 +227,13 @@ Features:
 - Added a new element to the Grid Terminal: Slider.
 
 Improvements:
+- The timestamp is now colored.
 - Added an option to disable network status tracking in the settings.
 - Improved the behavior of the terminal auto-reconnect, with an added option to cancel.
 - Terminals that have lost connection are now marked with a dim green indicator.
 - The import window now displays the size of the terminal being copied.
 - Added a pop-up notification for internet connection loss.
+- Some settings now include a list of preset values for quick selection.
 
 Fixes:
 - Fixed an issue of Classic terminal settings, due to which changes made inside tabs were reset upon closing and reopening.
