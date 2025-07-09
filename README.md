@@ -228,6 +228,7 @@ Features:
 
 Improvements:
 - The timestamp is now colored.
+- Added more timestamp options: UNIX, Relative, Delta - for Log items
 - Added an option to disable network status tracking in the settings.
 - Improved the behavior of the terminal auto-reconnect, with an added option to cancel.
 - Terminals that have lost connection are now marked with a dim green indicator.
@@ -235,11 +236,16 @@ Improvements:
 - Added a pop-up notification for internet connection loss.
 - Some settings now include a list of preset values for quick selection.
 
+Performance:
+- Timestamp formatter now cached, this will speed up the processing of received messages
+
 Fixes:
 - Fixed an issue of Classic terminal settings, due to which changes made inside tabs were reset upon closing and reopening.
 - Fixed a bug where the connection might not close after a single click on the scroll element.
 - Fixed: The joystick indicator did not return to its central position after interaction ended.
 - Fixed: When using a slider send delay, the last sent value could be incorrect.
+- Fixed: After background image change, blur scroll invokes image changing to previous
+- Fixed some UI bugs
   
 </details>
 <details>
