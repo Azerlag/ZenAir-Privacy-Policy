@@ -1,4 +1,4 @@
-This is official project page created by developer (me) dedicated to ZenAir Android application - tool for make connect to MCU's via local Wi-Fi, Bluetooth and MQTT. It's completely free and has no ads.
+This is official project page created by developer (me) dedicated to ZenAir Android application - tool for make connect to MCU's via local Wi-Fi, Bluetooth, MQTT or USB Serial. It's completely free and has no ads.
 
 The application provides a user interface editor with in-app «Terminals» to make it more comfy and flexible for using MCU in real practice.
 There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
