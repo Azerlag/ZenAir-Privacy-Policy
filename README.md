@@ -89,37 +89,37 @@ Non-mqtt commands handling:
 		Works with all items
 
 	zenItem index 	setColor 	uint32_t(color)		Set background color for item
-	zenItem index 	setColor				Clear background color for item by default color
-	zenItem 	setColor 	uint32_t(color)		Set background color for all items
-	zenItem 	setColor 				Clear background color for all items by default color
+	zenItem index 	setColor						Clear background color for item by default color
+	zenItem 		setColor 	uint32_t(color)		Set background color for all items
+	zenItem 		setColor 						Clear background color for all items by default color
 		
 		Works with all items
 
 	zenItem index 	setTitle 	your text		Set title text
-	zenItem index 	setTitle 				Clear title text
-	zenItem 	setTitle 	your text		Set title text for all
-	zenItem 	setTitle 				Clear title text for all
+	zenItem index 	setTitle 					Clear title text
+	zenItem 		setTitle 	your text		Set title text for all
+	zenItem 		setTitle 					Clear title text for all
 	
 		Works with: StateItem
 
 	zenItem index	setText 	your text		Set text to extra field for StateItem
-	zenItem index	setText 				Clear text in extra field for StateItem
-	zenItem 	setText 	your text		Set text to extra field for all StateItems
-	zenItem 	setText 				Clear text in extra field for all StateItems
+	zenItem index	setText 					Clear text in extra field for StateItem
+	zenItem 		setText 	your text		Set text to extra field for all StateItems
+	zenItem 		setText 					Clear text in extra field for all StateItems
 		
 		Works with: StateItem & ButtonItem & TextLogItem & SliderItem
 		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
 
-	zenItem index 	setIcon 	uint32_t(icon_code)			Set icon to item
+	zenItem index 	setIcon 	uint32_t(icon_code)						Set icon to item
 	zenItem index 	setIcon 	uint32_t(icon_code) uint32_t(color) 	Set colorized icon to item
-	zenItem index 	setIcon 	-* 		    uint32_t(color) 	Set color to icon
-	zenItem index 	setIcon 	-* 					Clear icon color
-	zenItem index 	setIcon 						Clear icon & color for item
-	zenItem       	setIcon 	uint32_t(icon_code)			Set icon for all items
-	zenItem       	setIcon 	uint32_t(icon_code) uint32_t(color)	Set colorized icon for all items
-	zenItem       	setIcon 	-* 		    uint32_t(color)	Set color to icon for all items
-	zenItem       	setIcon 	-* 					Clear icon color for all items
-	zenItem       	setIcon 						Clear icon & color for all items
+	zenItem index 	setIcon 	-* 		    		uint32_t(color) 	Set color to icon
+	zenItem index 	setIcon 	-* 										Clear icon color
+	zenItem index 	setIcon 											Clear icon & color for item
+	zenItem       	setIcon 	uint32_t(icon_code)						Set icon for all items
+	zenItem       	setIcon 	uint32_t(icon_code) uint32_t(color)		Set colorized icon for all items
+	zenItem       	setIcon 	-* 		   			uint32_t(color)		Set color to icon for all items
+	zenItem       	setIcon 	-* 										Clear icon color for all items
+	zenItem       	setIcon 											Clear icon & color for all items
 	
 	Example:
 		zenItem 0 setTitle hello title
@@ -203,17 +203,50 @@ Ensure that the format specified in the app is strictly followed, including main
 
 ## Notes
 
-- The implementation of a serial port reader may not work very well. On my test stand with Android 5.0 (Lollipop, API 21) data reception from debugger board based on CH32V305F8P6 controller was unstable.
-- The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
+- The implementation of a serial port reader may not work very well. On my test stand with Android 5.0 (Lollipop, API 21) data reception from debugger board based on CH32V305F8P6 controller was unstable
 - All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
+- The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
 - History does not occupy RAM, except for temporary buffer data waiting to be written to memory
 - Memory writes occur when transitioning from the main screen and when minimizing the application (stop event)
 - The Ignore List does not through specified tags (messages) to the console and history data arrays, but these messages still passed to the command handler
 - The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
   - Text and drawings below and to the right of the barcode’s black border can be anything. The main point is not to remove the border and to keep the code in the upper left corner
-- The Data Matrix library may struggle with terminals larger than 2-3 kilobytes.
+- The Data Matrix library may struggle with terminals larger than 2-3 kilobytes
 
 ## Changelogs
+
+<details>
+<summary>2.000 (Build 2) → 2.235 (2025.11.XX)</summary>
+
+Application size increased by 4.1 MB due to the addition of a JavaScript code engine.
+
+Features:
+- Added JavaScript runtime engine J2V8 in Linear Charts for dynamic modification of data names and values. Along with this, lots of JavaScript examples have been added, enjoy!
+- A new Linear Chart grid element has been introduced that supports charting with formats like "temp~25_hum~60~1712345678901_press~1013"
+- Integrated SSDP protocol of IoT devices as discovery stage in the Locator module
+
+Improvements:
+- Now data transfer to specific item is also available by specifying "zenItem index [data]" instead of exclusively referName
+- Added informational buttons for each Grid item in the addition list to enhance user guidance
+- Implemented gateway prime IP "detection", restricting analysis to valid IPv4 groups
+- Instead of numeric values enum names used now for `item content arrangement` and `chart view mode` settings
+- Optimized Locator and Terminal selection logic to eliminate high-cost recalculations of imported terminal base information
+
+Fixes:
+- The `ignoreHandleCommands` setting in Classic Terminal did not work
+- Standardized shared terminal size estimation to use only `importedText.length` when `settingsList` is non-null
+- Eliminated `ZEN_OK_MESSAGE` from Locator's find method; now only GUI request are used, this will speed up search process
+- Saving terminals order did not occur when exiting the application
+
+Other:
+- Added copy and paste buttons to the right side of multiline text fields
+- Added a close button to the end of each item's settings panel for streamlined navigation
+- The button for erasing temporary item data (background color) is now decorated with a color indicator
+- Was made transition to a new library for dragging terminals
+
+</details>
+
+▷ X → 1.43 (2023.08.10)
 
 ▷ 2.000 → 2.000 (Build 2) (2025.07.28)
 - From `Yevhen Honchar` user: `BackgroundService` Intent start event causes crash at App start with message `java.lang.RuntimeException: Unable to start activity`. To handle this issue, the code now includes a `try catch` block and a Toast notification for the user. Error reason is unknown.
