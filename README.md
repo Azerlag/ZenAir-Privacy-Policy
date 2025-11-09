@@ -246,8 +246,6 @@ Other:
 
 </details>
 
-▷ X → 1.43 (2023.08.10)
-
 ▷ 2.000 → 2.000 (Build 2) (2025.07.28)
 - From `Yevhen Honchar` user: `BackgroundService` Intent start event causes crash at App start with message `java.lang.RuntimeException: Unable to start activity`. To handle this issue, the code now includes a `try catch` block and a Toast notification for the user. Error reason is unknown.
 
