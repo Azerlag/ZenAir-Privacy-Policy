@@ -146,7 +146,7 @@ MQTT commands handling:
 <details>
 <summary>CLASSIC</summary>
 
-#### The MCU can set the button color defined in the button Settings
+#### MCU can set the button color defined in the button Settings
 1) Activate in: Settings → Buttons! → Button → Enable color changing with commands
 2) Set your preferred command with plain text
 3) Set your preferred color by clicking to color represent box
@@ -157,7 +157,7 @@ In sketch it can be:
 ```
 Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 
-#### The MCU can set the button color directement in ARGB format
+#### MCU can set the button color directement in ARGB format
 1) Activate in: Settings → Buttons! → Button → Allow to set ARGB color by command as <command button_index uint32_t(color)>
 2) Set your preferred command with plain text
 3) Receive command from MCU
@@ -182,12 +182,12 @@ In sketch it can be:
 ```
 <img src="res/setColor.gif" width="400" height="300" alt="Color set demo">
 
-#### The MCU can reset all current button colors to the default white with a command
+#### MCU can reset all current button colors to the default white with a command
 1) Activate in: Settings → Buttons! → Use all button colors clear command
 2) Set your preferred command with plain text
 3) Receive command from MCU (see instructions above)
 
-#### The MCU can set the button text
+#### MCU can set the button text
 1) Activate in: Settings → Buttons! → Button → Enable a text replacement command
 2) Set your preferred command with plain text
 3) Receive command from MCU
@@ -222,7 +222,7 @@ Application size increased by 4.1 MB due to the addition of a JavaScript code en
 
 Features:
 - Added JavaScript runtime engine J2V8 in Linear Charts for dynamic modification of data names and values. Along with this, lots of JavaScript examples have been added, enjoy!
-- A new Linear Chart grid element has been introduced that supports charting with formats like "temp~25_hum~60~1712345678901_press~1013"
+- A new Linear Chart grid element has been introduced that supports charting with formats like `"temp~25_hum~60~1712345678901_press~1013"`
 - Integrated SSDP protocol of IoT devices as discovery stage in the Locator module
 
 Improvements:
