@@ -201,7 +201,7 @@ In sketch it can be:
 Ensure that the format specified in the app is strictly followed, including maintaining a space between the command and the button future text: "command text"
 </details>
 
-№№ Known issues
+## Known issues
 - Selecting lines outside of the visible area for the console crashes app
 
 ## Notes
