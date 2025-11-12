@@ -87,40 +87,37 @@ You can also use the commands without an MCU by hand. To do this, enable the «S
 Non-mqtt commands handling:
 
 		Works with all items
-
-	zenItem index 	setColor 	uint32_t(color)		Set background color for item
-	zenItem index 	setColor						Clear background color for item by default color
-	zenItem 		setColor 	uint32_t(color)		Set background color for all items
-	zenItem 		setColor 						Clear background color for all items by default color
+	zenItem 	index 	setColor 	uint32_t(color)		Set background color for item
+	zenItem 	index 	setColor						Clear background color for item by default color
+	zenItem 			setColor 	uint32_t(color)		Set background color for all items
+	zenItem 			setColor 						Clear background color for all items by default color
 		
 		Works with all items
-
-	zenItem index 	setTitle 	your text		Set title text
-	zenItem index 	setTitle 					Clear title text
-	zenItem 		setTitle 	your text		Set title text for all
-	zenItem 		setTitle 					Clear title text for all
+	zenItem 	index 	setTitle 	your text			Set title text
+	zenItem 	index 	setTitle 						Clear title text
+	zenItem 			setTitle 	your text			Set title text for all
+	zenItem 			setTitle 						Clear title text for all
 	
 		Works with: StateItem
-
-	zenItem index	setText 	your text		Set text to extra field for StateItem
-	zenItem index	setText 					Clear text in extra field for StateItem
-	zenItem 		setText 	your text		Set text to extra field for all StateItems
-	zenItem 		setText 					Clear text in extra field for all StateItems
+	zenItem 	index	setText 	your text			Set text to extra field for StateItem
+	zenItem 	index	setText 						Clear text in extra field for StateItem
+	zenItem 			setText 	your text			Set text to extra field for all StateItems
+	zenItem 			setText 						Clear text in extra field for all StateItems
 		
 		Works with: StateItem & ButtonItem & TextLogItem & SliderItem
-		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
+		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
+		
+	zenItem		index	setIcon 	uint32_t(icon_code)						Set icon to item
+	zenItem		index	setIcon 	uint32_t(icon_code) uint32_t(color) 	Set colorized icon to item
+	zenItem 	index	setIcon 	-* 					uint32_t(color) 	Set color to icon
+	zenItem 	index	setIcon 	-* 										Clear icon color
+	zenItem 	index	setIcon 											Clear icon & color for item
+	zenItem 			setIcon 	uint32_t(icon_code)						Set icon for all items
+	zenItem 			setIcon 	uint32_t(icon_code) uint32_t(color)		Set colorized icon for all items
+	zenItem 			setIcon 	-* 					uint32_t(color)		Set color to icon for all items
+	zenItem 			setIcon 	-* 										Clear icon color for all items
+	zenItem 			setIcon 											Clear icon & color for all items
 
-	zenItem index 	setIcon 	uint32_t(icon_code)						Set icon to item
-	zenItem index 	setIcon 	uint32_t(icon_code) uint32_t(color) 	Set colorized icon to item
-	zenItem index 	setIcon 	-* 		    		uint32_t(color) 	Set color to icon
-	zenItem index 	setIcon 	-* 										Clear icon color
-	zenItem index 	setIcon 											Clear icon & color for item
-	zenItem       	setIcon 	uint32_t(icon_code)						Set icon for all items
-	zenItem       	setIcon 	uint32_t(icon_code) uint32_t(color)		Set colorized icon for all items
-	zenItem       	setIcon 	-* 		   			uint32_t(color)		Set color to icon for all items
-	zenItem       	setIcon 	-* 										Clear icon color for all items
-	zenItem       	setIcon 											Clear icon & color for all items
-	
 	Example:
 		zenItem 0 setTitle hello title
 		element of zero index will gives new title: "hello title"
@@ -131,17 +128,18 @@ MQTT commands handling:
 		Works with only one element per command (individually - against processing logic of non-mqtt connection)
 		Any messages that cannot be processed as color-command will be identified as extra text to insert to the item
 	TextLogItem:
-		Any message will added to log (except success handled main zenItem commands with «Don't display accepted commands» setting)
+		Any message will be added to log (except success handled main zenItem commands with «Don't display accepted commands» setting)
 	ButtonItem:
 		isn't subscriber
 	TextFieldItem:
-		isn't subscriber
+		isn't subscriber	
 	SliderItem:
-		isn't subscriber
+		isn't subscriber	
+	LinearChartItem:
+		"key1~1234" or "key1~1234_key2~4321" messages will be added as data-point to Chart
 ```
 <video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
 </details>
-
 
 <details>
 <summary>CLASSIC</summary>
