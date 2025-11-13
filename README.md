@@ -6,7 +6,7 @@ There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 2.000
+All instructions below pertain to the current version at the time of writing: 2.235
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -22,16 +22,11 @@ I also use `PROGMEM` in ESP8266
 ```c
 #define ZEN_GET_GUI_COMMAND "zen_get_gui"
 #define ZEN_GET_GUI_COMMAND_RESPONCE "zen_set_gui:"
-#define ZEN_SEARCH_COMMAND "zen_search_message"
-#define ZEN_SEARCH_COMMAND_RESPONCE "zen_OK"
 
-if (strcmp(c, ZEN_SEARCH_COMMAND) == 0) {
-  client.println(ZEN_SEARCH_COMMAND_RESPONCE);
-  continue;
-} else if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
-  client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
-  client.println(zen_terminal);
-  continue;
+if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
+	client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
+	client.println(zen_terminal);
+	continue;
 }
 ```
 I use `continue` to skip the current pass of the loop inside the `while (client.connected())` statement. This ensures that no more data will be sent to the Locator during the search process.
@@ -42,6 +37,9 @@ I use `continue` to skip the current pass of the loop inside the `while (client.
 // ###################### COMMON CONFIGURATION & CONSTANTS
 #define ROOT_SIZE 120
 #define READ_BYTES_TERMINATOR ';'
+
+#define ZEN_GET_GUI_COMMAND "zen_get_gui"
+#define ZEN_GET_GUI_COMMAND_RESPONCE "zen_set_gui:"
 // ######################
 
 void atClient() {
@@ -50,10 +48,7 @@ void atClient() {
       char c[(ROOT_SIZE)] = "";
       const uint8_t amount = client.readBytesUntil(READ_BYTES_TERMINATOR, c, (ROOT_SIZE));
 
-      if (strcmp(c, ZEN_SEARCH_COMMAND) == 0) {
-        client.println(ZEN_SEARCH_COMMAND_RESPONCE);
-        continue;
-      } else if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
+      if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
         client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
         client.println(zen_terminal);
         continue;
@@ -77,7 +72,121 @@ Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 During the search process, the Locator sends a `zen_search_message` to your device, adds the device to the whitelist, and continues the search. At the end of the process, it checks the whitelist by sending a `zen_get_gui` message.
 
 </details>
- 
+
+<details>
+<summary>LOCATOR (SSDP)</summary>
+
+Sometimes SSDP works on Sketch, sometimes not. This is most likely due to a conflict between HTTP (ESP8266WebServer) and server (WiFiServer), you can throw `WiFiServer` away and use HTTP get or pust requests to send Terminal to App, but i haven't tested this case. Anyway, I still recommend using hardcoded IP addresses in combination with passing them via an HTTP page in station mode (STA MODE).
+
+```c
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <ESP8266SSDP.h>
+
+// ###################### COMMON CONFIGURATION & CONSTANTS
+#define STASSID "wifi_ssid"
+#define STAPSK "wifi_pass"
+
+#define ROOT_SIZE 120
+#define READ_BYTES_TERMINATOR ';'
+
+#define ZEN_GET_GUI_COMMAND "zen_get_gui"
+#define ZEN_GET_GUI_COMMAND_RESPONCE "zen_set_gui:"
+// ######################
+
+const PROGMEM char* zen_terminal = "[H4sIAAAAAAAAAJ2SW3OqMBDHPwtQZ6y0DHeRF1rl4KFK66UqoyfOcBUEpWJVhOF89qqZPoYHM5tMkt1f_tlNFgWuxzG0WNcvdpngMs5QLU7En3C4cXVfY64BF6eV4uUTAmRplqcY9mJIOkHTDApy9hUQ1RT-3wYU7R7vkHQr7skKAvXbaWSiVVVCUus7rupXMGilCE1xyNcboyEBLVVRShEJOXFFAVtIzA4q8kI-9qECQuflOPf8Za8iLyS0ukNJRTM8snzfaMiy52eJho3tyGRehh7vzf8daJpznrMNgbmLU4mt14NFaqd__WTuvhFye5IS54m8oGdvfh20zfxL1NJs1p0EjZe-9DEWa_CA4S4_9CwzVDS4Trv9cS25zllRYxnLrrc_V72bzwOdI1NvOGF7Z-yNMYyJ7deXsCmZy2kYOGYNs0azW7BLWF1FOILBntACyLvwFPL1-2HKtYoTmAUkdipYySChuLe1-dZ0o_WNkjt091Agg-xyk5ES1tllBVzPt9pj5g2VJBoRpl-Myj-DNKonz4_Wg5BvAGCO-lkFmEAtKeW98FSl1Ws3He8zs4VyFXdAL-HrwclQP6zlwt_WdoTawACIZGOiDDUGSr9HX7pvuhU_McdL8AOaXe2szgUAAA==]";
+
+const char* ssid = STASSID;
+const char* password = STAPSK;
+
+ESP8266WebServer HTTP(8080);
+WiFiServer server(80);
+WiFiClient client;
+
+const char* desc_xml = "/description.xml";
+const char* ssdp_name = "optional";
+const char* ssdp_sn = "000000000000";  // Should be unical (e.g., "V1.0", build ID), better to be dynamic generated in runtime
+const char* ssdp_model_name = "optional";
+const char* ssdp_model_num = "000000000000";  // Optional, can be same as ssdp_sn
+const char* ssdp_model_url = "";              // Optional (http://www.example.com)
+const char* ssdp_mfr = "optional";
+const char* ssdp_mfr_url = "";  // Optional, same as model_url
+
+void atClient() {
+  static float counter = 0;
+  while (client.connected()) {
+    if (client.available()) {
+      char c[(ROOT_SIZE)] = "";
+      const uint8_t amount = client.readBytesUntil(READ_BYTES_TERMINATOR, c, (ROOT_SIZE));
+      Serial.printf("c:%s\n", c);
+
+      if (strcmp(c, ZEN_GET_GUI_COMMAND) == 0) {
+        client.print(ZEN_GET_GUI_COMMAND_RESPONCE);
+        client.println(zen_terminal);
+        continue;
+      }
+
+      // ...
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println();
+  Serial.println("Starting WiFi...");
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  unsigned long start = millis();
+  while (WiFi.status() != WL_CONNECTED && (millis() - start < 10000)) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.printf("WiFi connected, IP: %s\n", WiFi.localIP().toString().c_str());
+
+    HTTP.on(desc_xml, HTTP_GET, []() {
+      SSDP.schema(HTTP.client());
+    });
+    HTTP.begin();
+    Serial.printf("HTTP ready!\n");
+
+    server.begin();
+    Serial.printf("WiFi Server ready!\n");
+
+    Serial.printf("Starting SSDP...\n");
+    SSDP.setSchemaURL(desc_xml);
+    SSDP.setHTTPPort(8080);
+    SSDP.setName(ssdp_name);
+    SSDP.setSerialNumber(ssdp_sn);
+    SSDP.setURL("/");
+    SSDP.setModelName(ssdp_model_name);
+    SSDP.setModelNumber(ssdp_model_num);
+    SSDP.setModelURL(ssdp_model_url);
+    SSDP.setManufacturer(ssdp_mfr);
+    SSDP.setManufacturerURL(ssdp_mfr_url);
+    SSDP.begin();
+    Serial.printf("SSDP ready!\n");
+  } else {
+    Serial.printf("WiFi failed\n");
+    while (1) { delay(100); }
+  }
+}
+
+void loop() {
+  client = server.available();
+  if (client) atClient();
+
+  HTTP.handleClient();
+}
+
+```
+
+</details>
+
 <details>
 <summary>GRID</summary>
   
@@ -121,23 +230,125 @@ Non-mqtt commands handling:
 	Example:
 		zenItem 0 setTitle hello title
 		element of zero index will gives new title: "hello title"
-	
-MQTT commands handling:
-	StateItem:
-		Message-to-color (state commands in settings)
-		Works with only one element per command (individually - against processing logic of non-mqtt connection)
-		Any messages that cannot be processed as color-command will be identified as extra text to insert to the item
-	TextLogItem:
-		Any message will be added to log (except success handled main zenItem commands with «Don't display accepted commands» setting)
-	ButtonItem:
-		isn't subscriber
-	TextFieldItem:
-		isn't subscriber	
-	SliderItem:
-		isn't subscriber	
-	LinearChartItem:
-		"key1~1234" or "key1~1234_key2~4321" messages will be added as data-point to Chart
 ```
+## Items
+<details>
+	<summary>State Item</summary>
+
+Received message will be processed in the following order:
+- Message-to-color (state commands in settings)
+- (MQTT) Insert extra text to the Item (not as Title, but to the special field)
+  
+Allowed commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
+- Extra text: zenItem index	setText your text
+
+</details>
+<details>
+	<summary>Text Log</summary>
+
+Any received message will be added to the Log Items, except for the following:
+- Commands that were successfully processed, if "Don't display accepted commands" setting is enabled
+- Messages that are linked to a specific Log Item via referName in Item settings
+- This is MQTT type Terminal (in MQTT, you are already sending a message to the specified subscriber)
+
+Examples:
+- To all Log Items: "[message]"
+- To the specific Log Item: 
+"referName [message]"
+"zenItem index [message]"
+
+Allowed commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
+
+</details>
+<details>
+	<summary>Button Item</summary>
+
+Button is an ordinary publisher, so it can be modified only as basic Item by zenItem commands
+
+Allowed commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
+
+</details>
+<details>
+	<summary>Input Field</summary>
+
+Input Field is an ordinary publisher
+
+To set current command text: 
+"zenItem index [string]"
+Or directly as an MQTT subscriber:
+"[string]"
+
+Allowed commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+	
+</details>
+<details>
+	<summary>Slider Item</summary>
+
+Slider is an ordinary publisher
+
+To set current slider value: 
+"zenItem index [int_value]"
+Or directly as an MQTT subscriber:
+"[int_value]"
+
+Allowed commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
+
+</details>
+<details>
+	<summary>Linear Chart Item</summary>
+
+A Linear Chart works on the same principle as Text Log, in the case when a message received without specifying the referName (in MQTT, you are already sending a message to the specified subscriber, so you shouldn't worry), the handler will either send a message to all plotters, or find the owner of the referName and pass message only to that item
+
+Examples:
+- To all plotters: "temp~25_hum~60~1762089018499_press~1013"
+- To the specific plotter: 
+"referName temp~25_[...]"
+"zenItem index temp~25_[...]"
+Or directly as an MQTT subscriber:
+"temp~25_[...]"
+
+Chart zooming and moving are gesture-driven:
+- Two fingers: zoom
+- Long-press with one finger:  
+  - Left/right: move horizontally  
+  - Up/down: zoom
+
+Data interaction via JavaScript is supported. You can modify keys (names), values, and add new points to the Chart using the `addToChart(name, value)` command. Exercise extreme caution with JavaScript! Avoid special characters in data keys to prevent runtime failures. The `invokeCommand` method is also available for dispatching commands to the primary handler
+
+Allowed JavaScript commands:
+- addToChart(name, value);
+- invokeCommand("zenItem index temp~1234");
+
+Syntax:
+- key: String (const char*)
+- value: Int (only int32_t, no float support)
+- time: Long (uint64_t), do not pass negatives or past time values
+
+Supports:
+- "key~value"
+- "key~value~time"
+- "k1~v1_k2~v2~t2_k3~v3", note that the separator character is the '_' (underscore)
+
+Allowed zenItem commands:
+- Background color: zenItem index setColor uint32_t(color)
+- Title text: zenItem index setTitle your text
+
+</details>
+
 <video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
 </details>
 
@@ -217,14 +428,15 @@ Ensure that the format specified in the app is strictly followed, including main
 ## Changelogs
 
 <details>
-<summary>2.000 (Build 2) → 2.235 (2025.11.XX)</summary>
+<summary>2.000 (Build 2) → 2.235 (2025.11.14)</summary>
 
-Application size increased by 4.1 MB due to the addition of a JavaScript code engine.
+Application size increased by 4.1 MB due to the addition of a JavaScript code engine
 
 Features:
 - Added JavaScript runtime engine J2V8 in Linear Charts for dynamic modification of data names and values. Along with this, lots of JavaScript examples have been added, enjoy!
-- A new Linear Chart grid element has been introduced that supports charting with formats like `"temp~25_hum~60~1712345678901_press~1013"`
+- A new Linear Chart grid element has been introduced that supports charting with formats like "temp~25_hum~60~1712345678901_press~1013"
 - Integrated SSDP protocol of IoT devices as discovery stage in the Locator module
+- Now Slider and Text Field items can be assigned their values via zenItem commands or directly (MQTT case)
 
 Improvements:
 - Now data transfer to specific item is also available by specifying "zenItem index [data]" instead of exclusively referName
@@ -232,18 +444,25 @@ Improvements:
 - Implemented gateway prime IP "detection", restricting analysis to valid IPv4 groups
 - Instead of numeric values enum names used now for `item content arrangement` and `chart view mode` settings
 - Optimized Locator and Terminal selection logic to eliminate high-cost recalculations of imported terminal base information
+- The history tab has been transformed to match the current console appearance
+- Optimized list scrolling. Now there are no unnecessary redraws of content when scrolling, which has reduced the load
 
 Fixes:
 - The `ignoreHandleCommands` setting in Classic Terminal did not work
 - Standardized shared terminal size estimation to use only `importedText.length` when `settingsList` is non-null
 - Eliminated `ZEN_OK_MESSAGE` from Locator's find method; now only GUI request are used, this will speed up search process
 - Saving terminals order did not occur when exiting the application
+- "Classic Terminal defaults" did not work
 
 Other:
 - Added copy and paste buttons to the right side of multiline text fields
 - Added a close button to the end of each item's settings panel for streamlined navigation
-- The button for erasing temporary item data (background color) is now decorated with a color indicator
 - Was made transition to a new library for dragging terminals
+
+Appearance:
+- Added the ability to globally replace the font of consoles and input fields with a monospaced one
+- The Icon of button for erasing temporary item data (background color) is now decorated with a color indicator
+- The Classic terminal's color reset button has been replaced with a more appropriate one
 
 </details>
 
