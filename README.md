@@ -314,12 +314,12 @@ Allowed commands:
 A Linear Chart works on the same principle as Text Log, in the case when a message received without specifying the referName (in MQTT, you are already sending a message to the specified subscriber, so you shouldn't worry), the handler will either send a message to all plotters, or find the owner of the referName and pass message only to that item
 
 Examples:
-- To all plotters: `temp~25_hum~60~1762089018499_press~1013`
-- To the specific plotter: 
-`referName temp~25_[...]`
-`zenItem index temp~25_[...]`
+- To all plotters: 'temp~25_hum~60~1762089018499_press~1013'
+- To the specific plotter:
+'referName temp~25_[...]'
+'zenItem index temp~25_[...]'
 Or directly as an MQTT subscriber:
-`temp~25_[...]`
+'temp~25_[...]'
 
 Chart zooming and moving are gesture-driven:
 - Two fingers: zoom
@@ -341,7 +341,7 @@ Syntax:
 Supports:
 - "key~value"
 - "key~value~time"
-- `k1~v1_k2~v2~t2_k3~v3`, note that the separator character is the '_' (underscore)
+- 'k1~v1_k2~v2~t2_k3~v3', note that the separator character is the '_' (underscore)
 
 Allowed zenItem commands:
 - Background color: zenItem index setColor uint32_t(color)
