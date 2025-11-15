@@ -284,8 +284,6 @@ Input Field is an ordinary publisher
 
 To set current command text: 
 "zenItem index [string]"
-Or directly as an MQTT subscriber:
-"[string]"
 
 Allowed commands:
 - Background color: zenItem index setColor uint32_t(color)
@@ -299,8 +297,6 @@ Slider is an ordinary publisher
 
 To set current slider value: 
 "zenItem index [int_value]"
-Or directly as an MQTT subscriber:
-"[int_value]"
 
 Allowed commands:
 - Background color: zenItem index setColor uint32_t(color)
