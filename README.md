@@ -241,7 +241,7 @@ Received message will be processed in the following order:
   
 Allowed commands:
 - Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
+- Ti
 - Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
 - Extra text: zenItem index	setText your text
 
@@ -346,9 +346,10 @@ Allowed zenItem commands:
 </details>
 
 <video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
-</details>
 
-###
+---
+
+</details>
 
 <details>
 <summary>CLASSIC</summary>
@@ -426,7 +427,7 @@ Ensure that the format specified in the app is strictly followed, including main
 ## Changelogs
 
 <details>
-<summary>2.000 (Build 2) → 2.235 (2025.11.14)</summary>
+<summary>2.235 (2025.11.14)</summary>
 
 Application size increased by 4.1 MB due to the addition of a JavaScript code engine
 
@@ -464,11 +465,11 @@ Appearance:
 
 </details>
 
-▷ 2.000 → 2.000 (Build 2) (2025.07.28)
+▷ 2.000 (Build 2) (2025.07.28)
 - From `Yevhen Honchar` user: `BackgroundService` Intent start event causes crash at App start with message `java.lang.RuntimeException: Unable to start activity`. To handle this issue, the code now includes a `try catch` block and a Toast notification for the user. Error reason is unknown.
 
 <details>
-<summary>1.958 → 2.000 (2025.07.12)</summary>
+<summary>2.000 (2025.07.12)</summary>
 
 Thank you for using my app. If you like it, I will be very glad to receive your review on Google Play!
 
@@ -501,7 +502,7 @@ Fixes:
   
 </details>
 <details>
-<summary>1.936 → 1.958 (2025.02.11)</summary>
+<summary>1.958 (2025.02.11)</summary>
 
 Features:
 - Added the ability to set a custom background image for the Terminal
@@ -516,7 +517,7 @@ Fixes:
   
 </details>
 <details>
-<summary>1.817a → 1.936 (2024.12.13)</summary>
+<summary>1.936 (2024.12.13)</summary>
 
 Thank you to everyone who continues to use my app! In turn, I'm introducing a new version
 
@@ -569,11 +570,11 @@ Other Changes:
 
 </details>
 
-▷ 1.817 → 1.817a (2024.10.02)
+▷ 1.817a (2024.10.02)
 - Minor improvement of the primary image processing algorithm before of main scanning for Data Matrix code is run. Now, instead of pure white, the first column of pixels (of the y coordinate) can be any color except black (reserved as the end of the barcode: blackeness of 15%). Despite this, it is still recommended not to deviate from the black-and-white paradigm, this improvement makes it possible to read jpeg modified images, where white and black can be impure (imperfect).
 - Buttons colorization by ARGB command works now
 <details>
-<summary>1.769 → 1.817 (2024.08.19)</summary>
+<summary>1.817 (2024.08.19)</summary>
 
 I should have released this update a long time ago, but unfortunately I noticed a significant bug with the MQTT buttons too late.
 
@@ -598,7 +599,7 @@ Fixes:
 
 </details>
 <details>
-<summary>1.633 → 1.769 (2024.07.22)</summary>
+<summary>1.769 (2024.07.22)</summary>
 I would like to thank everyone who continues to use my App and those who manually send crash reports via email. Thank you!
   
 For more information, including other version changelogs and usage examples, you can find the GitHub link on the interface size setting screen (Settings by Default). Also if you want to receive new versions earlier, join the beta testers on the ZenAir App page on the Google Play
@@ -646,10 +647,10 @@ Known Issues:
 - Resource limit settings for the receiver do not currently have any effect
 </details>
 
-▷ 1.632 → 1.633 (2024.05.06)
+▷ 1.633 (2024.05.06)
 - Terminal reordering and order saving works now
 <details>
-<summary>1.43 → 1.632 (2024.05.04)</summary>
+<summary>1.632 (2024.05.04)</summary>
 
 Performance:
 - Reduced a bit RAM usage by two classes merging
@@ -683,4 +684,4 @@ Future:
 
 </details>
 
-▷ X → 1.43 (2023.08.10)
+▷ 1.43 (2023.08.10)
