@@ -6,7 +6,7 @@ There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 2.235
+All instructions below pertain to the current version at the time of writing: 2.382
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -190,164 +190,11 @@ void loop() {
 <details>
 <summary>GRID</summary>
   
-The main way to control the environment from MCU is `zenItem` default commands, here is help table below.
+The main way to control the environment from MCU is `zenItem` default commands.
+
 You can also use the commands without an MCU by hand. To do this, enable the «Send messages directly to the internal commands handler» option on the sender item's settings.
-```
-Non-mqtt commands handling:
 
-		Works with all items
-	zenItem 	index 	setColor 	uint32_t(color)		Set background color for item
-	zenItem 	index 	setColor						Clear background color for item by default color
-	zenItem 			setColor 	uint32_t(color)		Set background color for all items
-	zenItem 			setColor 						Clear background color for all items by default color
-		
-		Works with all items
-	zenItem 	index 	setTitle 	your text			Set title text
-	zenItem 	index 	setTitle 						Clear title text
-	zenItem 			setTitle 	your text			Set title text for all
-	zenItem 			setTitle 						Clear title text for all
-	
-		Works with: StateItem
-	zenItem 	index	setText 	your text			Set text to extra field for StateItem
-	zenItem 	index	setText 						Clear text in extra field for StateItem
-	zenItem 			setText 	your text			Set text to extra field for all StateItems
-	zenItem 			setText 						Clear text in extra field for all StateItems
-		
-		Works with: StateItem & ButtonItem & TextLogItem & SliderItem
-		* «-» char to ignore param on icon_code place: «zenItem 0 setIcon - 4279522515»
-		
-	zenItem		index	setIcon 	uint32_t(icon_code)						Set icon to item
-	zenItem		index	setIcon 	uint32_t(icon_code) uint32_t(color) 	Set colorized icon to item
-	zenItem 	index	setIcon 	-* 					uint32_t(color) 	Set color to icon
-	zenItem 	index	setIcon 	-* 										Clear icon color
-	zenItem 	index	setIcon 											Clear icon & color for item
-	zenItem 			setIcon 	uint32_t(icon_code)						Set icon for all items
-	zenItem 			setIcon 	uint32_t(icon_code) uint32_t(color)		Set colorized icon for all items
-	zenItem 			setIcon 	-* 					uint32_t(color)		Set color to icon for all items
-	zenItem 			setIcon 	-* 										Clear icon color for all items
-	zenItem 			setIcon 											Clear icon & color for all items
-
-	Example:
-		zenItem 0 setTitle hello title
-		element of zero index will gives new title: "hello title"
-```
-## Items
-<details>
-	<summary>State Item</summary>
-
-Received message will be processed in the following order:
-- Message-to-color (state commands in settings)
-- (MQTT) Insert extra text to the Item (not as Title, but to the special field)
-  
-Allowed commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Ti
-- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
-- Extra text: zenItem index	setText your text
-
-</details>
-<details>
-	<summary>Text Log</summary>
-
-Any received message will be added to the Log Items, except for the following:
-- Commands that were successfully processed, if "Don't display accepted commands" setting is enabled
-- Messages that are linked to a specific Log Item via referName in Item settings
-- This is MQTT type Terminal (in MQTT, you are already sending a message to the specified subscriber)
-
-Examples:
-- To all Log Items: "[message]"
-- To the specific Log Item: 
-"referName [message]"
-"zenItem index [message]"
-
-Allowed commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
-- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
-
-</details>
-<details>
-	<summary>Button Item</summary>
-
-Button is an ordinary publisher, so it can be modified only as basic Item by zenItem commands
-
-Allowed commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
-- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
-
-</details>
-<details>
-	<summary>Input Field</summary>
-
-Input Field is an ordinary publisher
-
-To set current command text: 
-"zenItem index [string]"
-
-Allowed commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
-	
-</details>
-<details>
-	<summary>Slider Item</summary>
-
-Slider is an ordinary publisher
-
-To set current slider value: 
-"zenItem index [int_value]"
-
-Allowed commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
-- Icon: zenItem index setIcon uint32_t(icon_code) uint32_t(color)
-
-</details>
-<details>
-	<summary>Linear Chart Item</summary>
-
-A Linear Chart works on the same principle as Text Log, in the case when a message received without specifying the referName (in MQTT, you are already sending a message to the specified subscriber, so you shouldn't worry), the handler will either send a message to all plotters, or find the owner of the referName and pass message only to that item
-
-Examples:
-- To all plotters: `temp~25_hum~60~1762089018499_press~1013`
-- To the specific plotter:
-`referName temp~25_[...]`
-`zenItem index temp~25_[...]`
-Or directly as an MQTT subscriber:
-`temp~25_[...]`
-
-Chart zooming and moving are gesture-driven:
-- Two fingers: zoom
-- Long-press with one finger:  
-  - Left/right: move horizontally  
-  - Up/down: zoom
-
-Data interaction via JavaScript is supported. You can modify keys (names), values, and add new points to the Chart using the `addToChart(name, value)` command. Exercise extreme caution with JavaScript! Avoid special characters in data keys to prevent runtime failures. The `invokeCommand` method is also available for dispatching commands to the primary handler
-
-Allowed JavaScript commands:
-- addToChart(name, value);
-- invokeCommand("zenItem index temp~1234");
-
-Syntax:
-- key: String (const char*)
-- value: Int (only int32_t, no float support)
-- time: Long (uint64_t), do not pass negatives or past time values
-
-Supports:
-- "key~value"
-- "key~value~time"
-- `k1~v1_k2~v2~t2_k3~v3`, note that the separator character is the '_' (underscore)
-
-Allowed zenItem commands:
-- Background color: zenItem index setColor uint32_t(color)
-- Title text: zenItem index setTitle your text
-
-</details>
-
-<video src="res/zenItemCommandsHandleDemo.mp4" width=250 />
-
----
+Please refer to the data table in the App itself. This section is no longer in service.
 
 </details>
 
