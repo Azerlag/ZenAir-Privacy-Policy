@@ -427,6 +427,38 @@ Ensure that the format specified in the app is strictly followed, including main
 ## Changelogs
 
 <details>
+<summary>2.382 (2025.11.27)</summary>
+
+Features:
+- Added ability to globally pre-process incoming data by JavaScript
+- Introduced Placeholder Resolver, it finds «Command» in send/received messages and replaces them with «Result» (see info table in settings)
+- The "description" switch in Settings Screen has been abolished and completely replaced with hint icons next to the setting itself. Some descriptions also have images
+- Linear Chart: added Day/Night horizontal indicator line
+
+Improvements:
+- Added JavaScript syntax highlighting
+- Black list supports now fully functional tags with auto-assigned Terminator and UserPrefix
+- Linear Chart: nearest point detection algorithm accelerated ×6.7
+- Settings screen descriptions replaced with tooltip icons; selected settings now include illustrative images
+- Linear Chart: top time marks and bottom status bar now adapt by height
+- Introduced optional Long Press instead of immediate drag gesture for more comfortable item interaction
+
+Fixes:
+- Linear Chart: Max Auto Points indicators are now updated correctly when "Current Points" setting is toggled
+- Linear Chart: changing maximum data size no longer resets adaptive Y-axis limits
+- Linear Chart: bulk data transfer using "_" separator now works
+- JavaScript text field now instantly reacts to enabling/disabling the JS engine
+- Fixed incorrect JavaScript execution time measurement
+- Fixed insignificant visual glitch with boolean checkboxes in Settings
+- Dialogs are now limited to 2/3 of screen height
+- The Grid terminal button did not automatically close the connection when the repeat sending setting was enabled
+- Grid Slider broke the interaction when the current slider value size changed
+- An incorrect Hex Color code could cause crashes in a number of places in the app
+- Several minor stability improvements
+
+</details>
+
+<details>
 <summary>2.235 (2025.11.14)</summary>
 
 Application size increased by 4.1 MB due to the addition of a JavaScript code engine
