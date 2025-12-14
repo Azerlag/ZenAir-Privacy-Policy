@@ -6,7 +6,7 @@ There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
 App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 2.382
+All instructions below pertain to the current version at the time of writing: 2.447
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -272,7 +272,38 @@ Ensure that the format specified in the app is strictly followed, including main
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes
 
 ## Changelogs
+<details>
+<summary>2.447 (2025.12.14)</summary>
 
+Features:
+- Added new Joystick item
+- Added "send command while typing" option for Text Field item
+- Added new placeholderResolver functions: itemIndexFromTitle(title), itemsCount, itemType(itemIndex)
+- Default items size now based on screen size percentage
+
+Improvements:
+- Fixed redundant reinitialization of classic Terminal sliders when it leaving out and returning to screen, current values no longer reset
+- Vertical sliders now support default resize system
+- "Last Save" indicator now shows save duration in millis
+- Entire Terminal deletion dialog now requires confirmation to open
+- State item color command deletion now requires confirmation
+- Added separator bar between basic and item-specific settings
+
+Fixes:
+- Fixed issue where items could disappear during moving or leave workspace bounds
+- Fixed crash when dragging items
+- Auto-save interval accepting zero duration
+- StateItem color settings not updating when switching items
+- StateItem extra text not updating in certain cases
+- Blacklist deletion confirmation triggering on any bubble click
+- Slider with "send only last value" not closing connection
+- Slider placeholderResolver value getting function result missing "key"
+- Fixed placeholderResolver rand() crash when max greater than min
+- Bottom status bar font size in Linear Chart item not respecting defined screen size
+- Color representation buttons not using monospace font
+- Every entering into main settings triggers global save
+
+</details>
 <details>
 <summary>2.382 (2025.11.27)</summary>
 
@@ -304,7 +335,6 @@ Fixes:
 - Several minor stability improvements
 
 </details>
-
 <details>
 <summary>2.235 (2025.11.14)</summary>
 
