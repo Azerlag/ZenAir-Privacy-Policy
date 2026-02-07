@@ -1,9 +1,13 @@
-This is official project page created by developer (me) dedicated to ZenAir Android application - tool for make connect to MCU's via local Wi-Fi, Bluetooth, MQTT or USB Serial. It's completely free and has no ads.
+## ZenAir for Android
 
-The application provides a user interface editor with in-app «Terminals» to make it more comfy and flexible for using MCU in real practice.
-There is 2 view Terminal types: CLASSIC and GRID (since 1.936)
+The official repository for **ZenAir** — a comprehensive cross-protocol utility designed for seamless interaction with MCUs via **Wi-Fi (Local)**, **Bluetooth**, **MQTT**, and **USB Serial**. The application is distributed as a completely free, ad-free tool for developers and enthusiasts.
 
-App in Google Play: https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi
+### Some Features
+
+* **Dynamic UI Editor:** GRID Terminal is a highly customizable, item-based layout system that allows users to design their own control dashboards. Unlike traditional stream-based consoles, it provides a workspace for placing and configuring interactive UI elements.
+* **CLASSIC Terminal:** There is also standard hard layout interaction with limited capabilities.
+
+**Download on Google Play:** [link](https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi)
 
 ## Interaction functions
 All instructions below pertain to the current version at the time of writing: 2.447
