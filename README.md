@@ -10,7 +10,7 @@ The official repository for **ZenAir** — a comprehensive cross-protocol utilit
 **Download on Google Play:** [link](https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi)
 
 ## Interaction functions
-All instructions below pertain to the current version at the time of writing: 2.447
+All instructions below pertain to the current version at the time of writing: 2.600
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -70,10 +70,10 @@ Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 4. Open the main menu (top-left corner) and click the Locator's «Search Device» button to start the search process.
 5. Wait for the Locator to find your device. You can monitor the process by checking the IPs in the Locator Log, accessible via the left icon.
 - By default, the Locator searches within the IP range `192.168.0.0` to `192.168.3.0`.
-- To modify the search range, go to the settings menu by clicking the gear icon on the right.
-6. When a terminal is received from the device, you must manually add it unless you are in Log window. In Log the terminal will be added or replaced automatically, provided the corresponding setting is enabled
+- To modify the search range, go to the settings menu by clicking the gear icon.
+6. When a terminal is received from the device, terminal will be added or replaced automatically (if the corresponding setting is enabled) unless you are in Log dialog, in this case you must manually add it.
 
-During the search process, the Locator sends a `zen_search_message` to your device, adds the device to the whitelist, and continues the search. At the end of the process, it checks the whitelist by sending a `zen_get_gui` message.
+During the search process, the Locator sends a `zen_set_gui` message to your device and expects a response in form of Terminal export text.
 
 </details>
 
@@ -193,12 +193,14 @@ void loop() {
 
 <details>
 <summary>GRID</summary>
-  
-The main way to control the environment from MCU is `zenItem` default commands.
 
-You can also use the commands without an MCU by hand. To do this, enable the «Send messages directly to the internal commands handler» option on the sender item's settings.
+The main way to control the environment is Placeholer Resolver `$itemField` command. `zenItem` default commands are deprecated now.
 
-Please refer to the data table in the App itself. This section is no longer in service.
+Use `Demo Terminal` from menu to check some App features.
+
+Use the `Send messages directly to the internal commands handler` option on the sender item's settings to rule UI bypassing the receive data handling.
+
+This section is no longer in service. Refer to the data tables in the App itself to get actual info.
 
 </details>
 
