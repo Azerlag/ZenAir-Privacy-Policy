@@ -2,15 +2,9 @@
 
 The official repository for **ZenAir** — a comprehensive cross-protocol utility designed for seamless interaction with MCUs via **Wi-Fi (Local)**, **Bluetooth**, **MQTT**, and **USB Serial**. The application is distributed as a completely free, ad-free tool for developers and enthusiasts.
 
-### Some Features
+[Download on Google Play](https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi)
 
-* **Dynamic UI Editor:** GRID Terminal is a highly customizable, item-based layout system that allows users to design their own control dashboards. Unlike traditional stream-based consoles, it provides a workspace for placing and configuring interactive UI elements.
-* **CLASSIC Terminal:** There is also standard hard layout interaction with limited capabilities.
-
-**Download on Google Play:** [link](https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi)
-
-## Interaction functions
-All instructions below pertain to the current version at the time of writing: 2.600
+## Function descriptions
 
 <details>
 <summary>LOCATOR (finding zen-devices and import terminals from MCU)</summary>
@@ -219,7 +213,7 @@ In sketch it can be:
 Where `client` is `WiFiClient client;` from `#include <ESP8266WiFi.h>`
 
 #### MCU can set the button color directement in ARGB format
-1) Activate in: Settings → Buttons! → Button → Allow to set ARGB color by command as <command button_index uint32_t(color)>
+1) Activate in: Settings → Buttons! → Allow to set ARGB color by command as <command button_index uint32_t(color)>
 2) Set your preferred command with plain text
 3) Receive command from MCU
 In sketch it can be:
@@ -243,11 +237,6 @@ In sketch it can be:
 ```
 <img src="res/setColor.gif" width="400" height="300" alt="Color set demo">
 
-#### MCU can reset all current button colors to the default white with a command
-1) Activate in: Settings → Buttons! → Use all button colors clear command
-2) Set your preferred command with plain text
-3) Receive command from MCU (see instructions above)
-
 #### MCU can set the button text
 1) Activate in: Settings → Buttons! → Button → Enable a text replacement command
 2) Set your preferred command with plain text
@@ -263,16 +252,15 @@ Ensure that the format specified in the app is strictly followed, including main
 </details>
 
 ## Known issues
-- Selecting lines outside of the visible area for the console crashes app
+- Selecting list lines outside the visible area causes the app crash
 
 ## Notes
  
 - The implementation of a serial port reader may not work very well. On my test stand with Android 5.0 (Lollipop, API 21) data reception from debugger board based on CH32V305F8P6 controller was unstable
 - All changes to settings related to connections take effect with a new connection. Reconnect if the connection was open at the time of configuration change
-- The specified history size in the History screen represents the memory used by compressed GZIP data stored in Base85 encoding
+- The specified history size in the History screen or «on-disk» size represents the memory used by Zstd compressed data stored in binary encoding
 - History does not occupy RAM, except for temporary buffer data waiting to be written to memory
-- Memory writes occur when transitioning from the main screen and when minimizing the application (stop event)
-- The Ignore List does not through specified tags (messages) to the console and history data arrays, but these messages still passed to the command handler
+- Memory writes occur when the application is minimized (stop event), or by the Autosave counter
 - The Data Matrix scanner recognizes only application-native images. Do not attempt to scan real (live) barcode photos or images containing other elements besides the barcode
   - Text and drawings below and to the right of the barcode’s black border can be anything. The main point is not to remove the border and to keep the code in the upper left corner
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes
