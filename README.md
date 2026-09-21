@@ -405,4 +405,4 @@ Ensure that the format specified in the app is strictly followed, including main
 - The Data Matrix library may struggle with terminals larger than 2-3 kilobytes
 
 ## Changelogs
-Changelogs are maintained in the [Releases section](https://github.com/.../releases).
+Changelogs are maintained in the [Releases section](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases).
