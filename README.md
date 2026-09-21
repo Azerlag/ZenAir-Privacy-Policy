@@ -12,7 +12,7 @@ The official repository for **ZenAir** — a cross-protocol dashboard applicatio
 
 This is an universal Android build. Install it directly on your device.
 
-- **`ZenAir-android-3.260-167.apk`**  
+- [**`ZenAir-android-3.260-170.apk`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-android-3.260-170.apk)
 
 > This APK is signed with my own key rather than Google's. It is fully valid and works normally, but if you already have the Play Store version installed, there will be a signature mismatch so you'll need to uninstall the Play Store version first before installing this APK.
 
@@ -22,11 +22,11 @@ This is an universal Android build. Install it directly on your device.
 
 There are two options:
 
-1. **`ZenAir-linux-x64-3.260-167.jar`**  
+1. [**`ZenAir-linux-x64-3.260-170.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-3.260-170.jar)
    Standard JAR file. Requires Java 17 or higher to be installed on your system.
 
-2. **`ZenAir-linux-x64-distributable-3.260-167.7z`**  
-   Portable build with an embedded JRE. No separate Java installation is required. Extract the archive and run the `./bin/ZenAir` application file from the extracted folder.
+2. [**`ZenAir-linux-x64-distributable-3.260-170.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-distributable-3.260-170.7z)
+   Portable build with an embedded JRE. No separate Java installation is required. Extract the archive and run the `./bin/ZenAir` executable.
 
 #### Running the JAR on Arch Linux
 
@@ -89,11 +89,11 @@ SKIKO_RENDER_API="SOFTWARE" ./bin/ZenAir
 
 There are two options and I strictly **recommend** second one:
 
-1. **`ZenAir-windows-x64-3.260-167.jar`**  
+1. [**`ZenAir-windows-x64-3.260-170.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-3.260-170.jar)
    Standard JAR file. Requires Java 17 or higher to be installed on your system.
 
-2. **`ZenAir-windows-x64-distributable-3.260-167.7z`**  
-   Portable build with an embedded JRE. No separate Java installation is required. Extract the archive using 7-Zip or WinRAR and run the `ZenAir.exe` application file from the extracted folder.
+2. [**`--> ZenAir-windows-x64-distributable-3.260-170.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-distributable-3.260-170.7z)
+   Portable build with an embedded JRE. No separate Java installation is required. Extract the archive using 7-Zip or WinRAR and run the `ZenAir.exe` executable.
 
 #### Running the JAR on Windows
 
@@ -101,7 +101,7 @@ Make sure Java 17 or higher is installed:
 
 ```bat
 java -version
-```
+``` 
 You should see something like:
 ```text
 openjdk version "17.x" ...
@@ -114,7 +114,7 @@ If Java is not installed, install Java 17 or newer separately, for example OpenJ
 Run the JAR:
 
 ```bat
-java -jar "C:\path\to\ZenAir-windows-x64-3.260-167.jar"
+java -jar "C:\path\to\ZenAir-windows-x64-3.260-170.jar"
 ```
 
 If `java` is not recognized, make sure Java is added to your system `PATH`, or use the full path to `java.exe`.
@@ -133,7 +133,7 @@ Example on Linux:
 ```bash
 sha256sum -c SHA256SUMS
 # For a single file:
-sha256sum -c ZenAir-linux-x64-3.260-167.jar.sha256
+sha256sum -c ZenAir-linux-x64-3.260-170.jar.sha256
 ```
 Compare the resulting hash with the value listed in `SHA256SUMS`. `RELEASE-CHECKSUMS.md` also contains additional SHA512 and MD5 hashes.
 
