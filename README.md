@@ -2,7 +2,7 @@
 
 ## ZenAir
 
-The official repository for **ZenAir** — a cross-protocol dashboard application designed for seamless interaction with MCUs via **Wi-Fi**, **Bluetooth**, **MQTT**, **HTTP** and **USB Serial**. Available on Android, Windows and Linux. The application is distributed as a completely free, ad-free tool for developers and enthusiasts.
+The official repository for ZenAir — a cross-protocol dashboard application designed for seamless interaction with MCUs via **Wi-Fi**, **Bluetooth**, **MQTT**, **HTTP** and **USB Serial**. Available on Android, Windows and Linux. The application is distributed as a completely free, ad-free tool for developers and enthusiasts.
 
 - [Download Android app from Google Play](https://play.google.com/store/apps/details?id=com.gang_tracker.arduinowifi)
 - [Download desktop builds and apk from GitHub Releases](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases)
@@ -14,7 +14,7 @@ The official repository for **ZenAir** — a cross-protocol dashboard applicatio
 
 This is an universal Android build. Install it directly on your device.
 
-- [**`ZenAir-android-3.260-170.apk`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-android-3.260-170.apk)
+- [**`ZenAir-android-3.260-171.apk`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-android-3.260-171.apk)
 
 > This APK is signed with my own key rather than Google's. It is fully valid and works normally, but if you already have the Play Store version installed, there will be a signature mismatch so you'll need to uninstall the Play Store version first before installing this APK.
 
@@ -24,10 +24,10 @@ This is an universal Android build. Install it directly on your device.
 
 There are two options:
 
-1. [**`ZenAir-linux-x64-3.260-170.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-3.260-170.jar)
+1. [**`ZenAir-linux-x64-3.260-171.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-3.260-171.jar)
    Standard JAR file. Requires Java 17 or higher to be installed on your system.
 
-2. [**`ZenAir-linux-x64-distributable-3.260-170.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-distributable-3.260-170.7z)
+2. [**`ZenAir-linux-x64-distributable-3.260-171.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-linux-x64-distributable-3.260-171.7z)
    Portable build with an embedded JRE. No separate Java installation is required. Extract the archive and run the `./bin/ZenAir` executable.
 
 #### Running the JAR on Arch Linux
@@ -91,10 +91,10 @@ SKIKO_RENDER_API="SOFTWARE" ./bin/ZenAir
 
 There are two options and I strictly **recommend** second one:
 
-1. [**`ZenAir-windows-x64-3.260-170.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-3.260-170.jar)
+1. [**`ZenAir-windows-x64-3.260-171.jar`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-3.260-171.jar)
    Standard JAR file. Requires Java 17 or higher to be installed on your system.
 
-2. [**`--> ZenAir-windows-x64-distributable-3.260-170.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-distributable-3.260-170.7z)
+2. [**`--> ZenAir-windows-x64-distributable-3.260-171.7z`**](https://github.com/Azerlag/ZenAir-Privacy-Policy/releases/download/3.260/ZenAir-windows-x64-distributable-3.260-171.7z)
    Portable build with an embedded JRE. No separate Java installation is required. Extract the archive using 7-Zip or WinRAR and run the `ZenAir.exe` executable.
 
 #### Running the JAR on Windows
@@ -116,7 +116,7 @@ If Java is not installed, install Java 17 or newer separately, for example OpenJ
 Run the JAR:
 
 ```bat
-java -jar "C:\path\to\ZenAir-windows-x64-3.260-170.jar"
+java -jar "C:\path\to\ZenAir-windows-x64-3.260-171.jar"
 ```
 
 If `java` is not recognized, make sure Java is added to your system `PATH`, or use the full path to `java.exe`.
@@ -135,7 +135,7 @@ Example on Linux:
 ```bash
 sha256sum -c SHA256SUMS
 # For a single file:
-sha256sum -c ZenAir-linux-x64-3.260-170.jar.sha256
+sha256sum -c ZenAir-linux-x64-3.260-171.jar.sha256
 ```
 Compare the resulting hash with the value listed in `SHA256SUMS`. `RELEASE-CHECKSUMS.md` also contains additional SHA512 and MD5 hashes.
 
