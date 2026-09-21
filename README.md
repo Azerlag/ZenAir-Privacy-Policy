@@ -1,3 +1,5 @@
+<img width="1867" height="848" alt="output" src="https://github.com/user-attachments/assets/9ff4d247-5f2c-4d2d-90a1-c1081f755811" />
+
 ## ZenAir
 
 The official repository for **ZenAir** — a cross-protocol dashboard application designed for seamless interaction with MCUs via **Wi-Fi**, **Bluetooth**, **MQTT**, **HTTP** and **USB Serial**. Available on Android, Windows and Linux. The application is distributed as a completely free, ad-free tool for developers and enthusiasts.
